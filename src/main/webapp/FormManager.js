@@ -6,6 +6,7 @@ var errorC = document.getElementById("errorC");
 
 var pointsXArray = [];
 var pointsYArray = [];
+var pointsRArray = [];
 
 var radio_buttons = document.getElementsByClassName("radio_button");
 
@@ -58,6 +59,7 @@ document.querySelector("#clearButton").onclick = function (event) {
     event.preventDefault();
     pointsXArray = [];
     pointsYArray = [];
+    pointsRArray = [];
     $.post('servlet', {
         'clear': "true"
     }).done(function () {
@@ -92,9 +94,11 @@ function sendRequest(xValue, yValue, rValue) {
                 let result = JSON.parse(par);
                 pointsXArray = [];
                 pointsYArray = [];
+                pointsRArray = [];
                 for (let i in result.response) {
                     pointsXArray.push(result.response[i].xValue);
                     pointsYArray.push(result.response[i].yValue);
+                    pointsRArray.push(result.response[i].rValue);
                     let newRow = '<tr>';
                     newRow += '<td>' + result.response[i].xValue + '</td>';
                     newRow += '<td>' + result.response[i].yValue + '</td>';
@@ -103,12 +107,13 @@ function sendRequest(xValue, yValue, rValue) {
                     newRow += '<td>' + result.response[i].totalProcessingTime + '</td>';
                     newRow += '</tr>';
                     $('#pointsTable').append(newRow);
-                    drawPoint(result.response[i].xValue, result.response[i].yValue);
+                    clearCanvas();
+                    drawCanvas();
                 }
             }
         }
-    ).fail(function (err) {
-        alert(err);
+    ).fail(function (e) {
+        alert(e);
     });
 }
 

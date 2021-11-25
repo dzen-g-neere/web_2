@@ -97,6 +97,7 @@ function clearCanvas() {
 
 function drawPoints() {
     for (let i = 0; i < pointsXArray.length; i++) {
+        if (pointsRArray[i] === valueR.value)
         drawPoint(pointsXArray[i], pointsYArray[i]);
     }
 }
