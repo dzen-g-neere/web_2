@@ -57,7 +57,7 @@ public class AreaCheckServlet extends HttpServlet {
     }
 
     private boolean isValid(double x, double y, double r) {
-        return (x >= -3 && x <= 5) && (y >= -3 && y <= 5) && (r >= 1 && r <= 5);
+        return (x >= -5 && x <= 5) && (y >= -3 && y <= 5) && (r >= 1 && r <= 3);
     }
 
     private boolean isHit(double x, double y, double r) {

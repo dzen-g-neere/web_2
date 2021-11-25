@@ -185,6 +185,13 @@
             </label>
         </td>
     </tr>
+    <tr>
+        <td>
+            <label class="error" id="errorC" hidden>
+                Координаты точки должны быть в этих диапазонах: X(-5, 5) Y[-3, 5]
+            </label>
+        </td>
+    </tr>
 </table>
 <jsp:include page="hitsTable.jsp"/>
 </body>

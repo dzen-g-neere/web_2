@@ -2,6 +2,7 @@ var valueR = document.getElementById("valueR");
 
 var errorX = document.getElementById("errorX");
 var errorY = document.getElementById("errorY");
+var errorC = document.getElementById("errorC");
 
 var pointsXArray = [];
 var pointsYArray = [];
@@ -30,9 +31,10 @@ function clickOnCanvas(canvas, event) {
 
     console.log(x, y, r);
     if (isLegal(x, y, r)) {
+        errorC.hidden = true;
         drawPoint(x, y);
         sendRequest(x, y, r);
-    }
+    } else errorC.hidden = false;
 
 }
 
@@ -40,13 +42,12 @@ document.querySelector("#butSend").onclick = function (event) {
     event.preventDefault();
     if (!isNumber(text_field.value) || Math.abs(text_field.value) > 5 ||
         text_field.value === "" || !isChecked(radio_buttons)) {
-        errorY.hidden = true;
         errorX.hidden = !(!isNumber(text_field.value) || Math.abs(text_field.value) > 5 ||
             text_field.value === "");
-        if (!isChecked(radio_buttons)) {
-            errorY.hidden = false;
-        }
+            errorY.hidden = !isChecked(radio_buttons);
     } else {
+        errorX.hidden = true;
+        errorY.hidden = true;
         let x = text_field.value;
         let y = $('input[name="y"]:checked').val();
         let r = valueR.value;
@@ -127,7 +128,6 @@ function isNumber(n) {
 function isLegal(x, y, r) {
     return (isNumber(x) && isNumber(y) && isNumber(r) &&
         x > -5 && x < 5 && y >= -3 && y <= 5 && r >= 1 && r <= 3);
-
 }
 
 function refresh_button_selection() {
