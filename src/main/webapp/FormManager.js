@@ -3,6 +3,9 @@ var valueR = document.getElementById("valueR");
 var errorX = document.getElementById("errorX");
 var errorY = document.getElementById("errorY");
 
+var pointsXArray = [];
+var pointsYArray = [];
+
 var radio_buttons = document.getElementsByClassName("radio_button");
 
 var text_field = document.getElementById("paramX");
@@ -52,60 +55,60 @@ document.querySelector("#butSend").onclick = function (event) {
 }
 document.querySelector("#clearButton").onclick = function (event) {
     event.preventDefault();
-    return new Promise(function (resolve) {
-            $.post('servlet', {
-                'clear': "true"
-            }).done(function (data) {
-                    var table = document.getElementById("pointsTable");
-                    while (table.rows.length > 1) {
-                        table.deleteRow(1);
-                    }
-                    clearCanvas();
-                    drawCanvas();
-                }
-            ).fail(function (err) {
-                alert(err);
-            });
+    pointsXArray = [];
+    pointsYArray = [];
+    $.post('servlet', {
+        'clear': "true"
+    }).done(function () {
+            let table = document.getElementById("pointsTable");
+            while (table.rows.length > 1) {
+                table.deleteRow(1);
+            }
+            clearCanvas();
+            drawCanvas();
         }
-    );
+    ).fail(function (err) {
+        alert(err);
+    });
 }
 
 function sendRequest(xValue, yValue, rValue) {
-    return new Promise(function (resolve) {
-            $.post('servlet', {
-                'x': xValue,
-                'y': yValue,
-                'r': rValue,
-            }).done(function (data) {
-                    let table = document.getElementById("pointsTable");
-                    while (table.rows.length > 1) {
-                        table.deleteRow(1);
-                    }
-                    console.log(data);
-                    let par = data;
-                    if (par === "Incorrect coordinates type" || par == null || par === "") {
-                        return;
-                    }
-                    if (par !== "remove") {
-                        let result = JSON.parse(par);
-                        for (let i in result.response) {
-                            let newRow = '<tr>';
-                            newRow += '<td>' + result.response[i].xValue + '</td>';
-                            newRow += '<td>' + result.response[i].yValue + '</td>';
-                            newRow += '<td>' + result.response[i].rValue + '</td>';
-                            newRow += '<td>' + result.response[i].result + '</td>';
-                            newRow += '<td>' + result.response[i].totalProcessingTime + '</td>';
-                            newRow += '</tr>';
-                            $('#pointsTable').append(newRow);
-                            drawPoint(result.response[i].xValue, result.response[i].yValue);
-                        }
-                    }
+    $.post('servlet', {
+        'x': xValue,
+        'y': yValue,
+        'r': rValue,
+    }).done(function (data) {
+            let table = document.getElementById("pointsTable");
+            while (table.rows.length > 1) {
+                table.deleteRow(1);
+            }
+            console.log(data);
+            let par = data;
+            if (par === "Incorrect coordinates type" || par == null || par === "") {
+                return;
+            }
+            if (par !== "remove") {
+                let result = JSON.parse(par);
+                pointsXArray = [];
+                pointsYArray = [];
+                for (let i in result.response) {
+                    pointsXArray.push(result.response[i].xValue);
+                    pointsYArray.push(result.response[i].yValue);
+                    let newRow = '<tr>';
+                    newRow += '<td>' + result.response[i].xValue + '</td>';
+                    newRow += '<td>' + result.response[i].yValue + '</td>';
+                    newRow += '<td>' + result.response[i].rValue + '</td>';
+                    newRow += '<td>' + result.response[i].result + '</td>';
+                    newRow += '<td>' + result.response[i].totalProcessingTime + '</td>';
+                    newRow += '</tr>';
+                    $('#pointsTable').append(newRow);
+                    drawPoint(result.response[i].xValue, result.response[i].yValue);
                 }
-            ).fail(function (err) {
-                alert(err);
-            });
+            }
         }
-    );
+    ).fail(function (err) {
+        alert(err);
+    });
 }
 
 function isChecked(container) {

@@ -12,7 +12,7 @@
     <title>Dmitrii Zalevskii WebLab 2</title>
     <link href="styles.css" rel="stylesheet" type="text/css">
 </head>
-<body onload="drawCanvas()">
+<body onload="loadCanvas()">
 <table class="page">
 
     <tr>

@@ -8,14 +8,20 @@ let width = canvas.width;
 let height = canvas.height;
 canvas.addEventListener('mousedown', event => clickOnCanvas(canvas, event));
 
+function loadCanvas(){
+    pointsXArray = Array.from(document.getElementsByClassName("point_x")).map(v => v.innerHTML);
+    pointsYArray = Array.from(document.getElementsByClassName("point_y")).map(v => v.innerHTML);
+    drawCanvas();
+}
+
 function drawCanvas() {
     let valR = valueR.value * step;
     context.globalAlpha = 1;
-    drawRectangle(valR)
-    drawTriangle(valR)
-    drawCircle(valR)
-    drawAXIS()
-    drawPoints()
+    drawRectangle(valR);
+    drawTriangle(valR);
+    drawCircle(valR);
+    drawAXIS();
+    drawPoints();
 }
 
 function drawTriangle(valR) {
@@ -86,14 +92,12 @@ function clearCanvas() {
     context.save();
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.restore();
+    drawPoints();
 }
 
 function drawPoints() {
-    let xArray = Array.from(document.getElementsByClassName("point_x")).map(v => v.innerHTML);
-    let yArray = Array.from(document.getElementsByClassName("point_y")).map(v => v.innerHTML);
-    let rArray = Array.from(document.getElementsByClassName("point_r")).map(v => v.innerHTML);
-    for (let i = 0; i < xArray.length; i++) {
-        drawPoint(xArray[i], yArray[i], rArray[i])
+    for (let i = 0; i < pointsXArray.length; i++) {
+        drawPoint(pointsXArray[i], pointsYArray[i]);
     }
 }
 
