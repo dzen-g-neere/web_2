@@ -15,7 +15,7 @@ public class ControllerServlet extends HttpServlet {
                     req.getParameter("r") != null) {
                 getServletContext().getRequestDispatcher("/areaCheckServlet").forward(req, resp);
             } else if (req.getParameter("clear") != null && req.getParameter("clear").equals("true")) {
-                getServletContext().getRequestDispatcher("/clear").forward(req, resp);
+                getServletContext().getRequestDispatcher("/clearServlet").forward(req, resp);
             } else getServletContext().getRequestDispatcher("/resultPage.jsp").forward(req, resp);
         } catch (NullPointerException | NumberFormatException e) {
             System.out.println(e.getClass());

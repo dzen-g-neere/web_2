@@ -26,7 +26,7 @@
     </tr>
     <tr>
         <td>
-            <form method="get" action="<%= request.getContextPath() %>/servlet">
+            <form method="get" action="<%= request.getContextPath() %>/controllerServlet">
                 <button id="button" type="submit">Нажмите, для перехода на рабочую страницу.</button>
             </form>
         </td>

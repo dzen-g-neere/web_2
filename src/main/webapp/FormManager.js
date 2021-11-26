@@ -57,7 +57,7 @@ document.querySelector("#clearButton").onclick = function (event) {
     pointsXArray = [];
     pointsYArray = [];
     pointsRArray = [];
-    $.post('servlet', {
+    $.post('controllerServlet', {
         'clear': "true"
     }).done(function () {
             let table = document.getElementById("pointsTable");
@@ -73,7 +73,7 @@ document.querySelector("#clearButton").onclick = function (event) {
 }
 
 function sendRequest(xValue, yValue, rValue) {
-    $.post('servlet', {
+    $.post('controllerServlet', {
         'x': xValue,
         'y': yValue,
         'r': rValue,

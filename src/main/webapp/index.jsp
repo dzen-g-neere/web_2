@@ -35,7 +35,7 @@
                         <canvas class="input_part" id="canvas"></canvas>
                     </td>
                     <td>
-                        <form method="post" action="<%= request.getContextPath() %>/servlet">
+                        <form method="post" action="<%= request.getContextPath() %>/controllerServlet">
                             <table>
                                 <tr>
                                     <td class="input_part">

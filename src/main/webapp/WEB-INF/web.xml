@@ -9,7 +9,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ControllerServlet</servlet-name>
-        <url-pattern>/servlet</url-pattern>
+        <url-pattern>/controllerServlet</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>AreaCheckServlet</servlet-name>
@@ -25,7 +25,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ClearServlet</servlet-name>
-        <url-pattern>/clear</url-pattern>
+        <url-pattern>/clearServlet</url-pattern>
     </servlet-mapping>
     <error-page>
         <location>/resultPage.jsp</location>
