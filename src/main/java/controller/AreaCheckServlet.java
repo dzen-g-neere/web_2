@@ -38,7 +38,7 @@ public class AreaCheckServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             try {
-                //getServletContext().getRequestDispatcher("/controllerServlet").forward(req, resp);
+                getServletContext().getRequestDispatcher("/controllerServlet").forward(req, resp);
             } catch (Exception ignored) {
             }
         }
