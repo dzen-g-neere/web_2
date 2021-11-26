@@ -29,14 +29,12 @@ function clickOnCanvas(canvas, event) {
     let r = valueR.value;
     x = x.toFixed(2).replace(".00", "");
     y = y.toFixed(2).replace(".00", "");
-
     console.log(x, y, r);
     if (isLegal(x, y, r)) {
         errorC.hidden = true;
         drawPoint(x, y);
         sendRequest(x, y, r);
     } else errorC.hidden = false;
-
 }
 
 document.querySelector("#butSend").onclick = function (event) {
@@ -69,8 +67,8 @@ document.querySelector("#clearButton").onclick = function (event) {
             clearCanvas();
             drawCanvas();
         }
-    ).fail(function (err) {
-        alert(err);
+    ).fail(function (e) {
+        alert(e);
     });
 }
 
@@ -134,7 +132,7 @@ function isLegal(x, y, r) {
         x > -5 && x < 5 && y >= -3 && y <= 5 && r >= 1 && r <= 3);
 }
 
-function refresh_button_selection() {
+function refreshButtonSelection() {
     let index, len;
     for (index = 0, len = r_buttons.length; index < len; ++index) {
         let element = r_buttons[index];
@@ -143,43 +141,38 @@ function refresh_button_selection() {
         }
     }
 }
+function radiusButtonRefresh(){
+    refreshButtonSelection();
+    clearCanvas();
+    drawCanvas();
+}
 
 function r1_0() {
     valueR.value = "1.0";
-    refresh_button_selection();
+    radiusButtonRefresh();
     r_but_1_0.classList.add('selected');
-    clearCanvas();
-    drawCanvas();
 }
 
 function r1_5() {
     valueR.value = "1.5";
-    refresh_button_selection();
+    radiusButtonRefresh();
     r_but_1_5.classList.add('selected');
-    clearCanvas();
-    drawCanvas();
 }
 
 function r2_0() {
     valueR.value = "2.0";
-    refresh_button_selection();
+    radiusButtonRefresh();
     r_but_2_0.classList.add('selected');
-    clearCanvas();
-    drawCanvas();
 }
 
 function r2_5() {
     valueR.value = "2.5";
-    refresh_button_selection();
+    radiusButtonRefresh();
     r_but_2_5.classList.add('selected');
-    clearCanvas();
-    drawCanvas();
 }
 
 function r3_0() {
     valueR.value = "3.0";
-    refresh_button_selection();
+    radiusButtonRefresh();
     r_but_3_0.classList.add('selected');
-    clearCanvas();
-    drawCanvas();
 }

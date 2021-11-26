@@ -1,7 +1,7 @@
 let axis_separator_offset = 5;
 let step = 50;
 let canvas = document.getElementById("canvas"),
-    context = canvas.getContext("2d");
+    ctx = canvas.getContext("2d");
 canvas.width = 510;
 canvas.height = 510;
 let width = canvas.width;
@@ -17,7 +17,7 @@ function loadCanvas(){
 
 function drawCanvas() {
     let valR = valueR.value * step;
-    context.globalAlpha = 1;
+    ctx.globalAlpha = 1;
     drawRectangle(valR);
     drawTriangle(valR);
     drawCircle(valR);
@@ -25,74 +25,73 @@ function drawCanvas() {
     drawPoints();
 }
 
-function drawTriangle(valR) {
-    context.fillStyle = '#FF7400';
-    context.beginPath();
-    context.moveTo((width / 2) + valR / 2, height / 2);
-    context.lineTo(width / 2, height / 2 + valR);
-    context.lineTo(width / 2, height / 2);
-    context.fill();
+function drawTriangle(rValue) {
+    ctx.fillStyle = '#FF7400';
+    ctx.beginPath();
+    ctx.moveTo((width / 2) + rValue / 2, height / 2);
+    ctx.lineTo(width / 2, height / 2 + rValue);
+    ctx.lineTo(width / 2, height / 2);
+    ctx.fill();
 }
 
-function drawCircle(valR) {
-    context.beginPath();
-    context.fillStyle = '#FF7400';
-    context.strokeStyle = '#FF7400';
-    context.arc(width / 2, height / 2, valR, Math.PI, 3 * Math.PI / 2);
-    context.lineTo(width / 2, height / 2)
-    context.fill();
-    context.stroke();
+function drawCircle(rValue) {
+    ctx.beginPath();
+    ctx.fillStyle = '#FF7400';
+    ctx.strokeStyle = '#FF7400';
+    ctx.arc(width / 2, height / 2, rValue, Math.PI, 3 * Math.PI / 2);
+    ctx.lineTo(width / 2, height / 2)
+    ctx.fill();
+    ctx.stroke();
 }
 
-function drawRectangle(valR) {
-    context.fillStyle = '#FF7400';
-    context.strokeStyle = '#FF7400';
-    context.beginPath();
-    context.fillRect(width / 2, height / 2, valR / 2, -valR);
-
+function drawRectangle(rValue) {
+    ctx.fillStyle = '#FF7400';
+    ctx.strokeStyle = '#FF7400';
+    ctx.beginPath();
+    ctx.fillRect(width / 2, height / 2, rValue / 2, -rValue);
 }
 
 function drawAXIS() {
-    context.strokeStyle = 'black';
-    context.fillStyle = 'black';
-    context.beginPath();
-    context.moveTo(width / 2, 0);
-    context.lineTo(width / 2, height);
-    context.stroke();
-    context.beginPath();
-    context.moveTo(0, height / 2);
-    context.lineTo(width, height / 2);
-    context.stroke();
-    context.strokeText("Y", 240, 10);
-    context.strokeText("X", 500, height / 2 - 10);
-    context.stroke();
+    ctx.strokeStyle = 'black';
+    ctx.fillStyle = 'black';
+    ctx.beginPath();
+    ctx.moveTo(width / 2, 0);
+    ctx.lineTo(width / 2, height);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, height / 2);
+    ctx.lineTo(width, height / 2);
+    ctx.stroke();
+    ctx.strokeText("Y", 240, 10);
+    ctx.strokeText("X", 500, height / 2 - 10);
+    ctx.stroke();
     for (let i = -5; i <= 5; i++) {
-        context.beginPath();
+        ctx.beginPath();
         let x = width / 2 + step * i;
-        context.moveTo(x, height / 2 + axis_separator_offset);
-        context.lineTo(x, height / 2 - axis_separator_offset);
+        ctx.moveTo(x, height / 2 + axis_separator_offset);
+        ctx.lineTo(x, height / 2 - axis_separator_offset);
         if (i !== 0) {
-            context.fillText(i.toString(), x - axis_separator_offset / 2, height / 2 + 3 * axis_separator_offset);
+            ctx.fillText(i.toString(), x - axis_separator_offset / 2, height / 2 + 3 * axis_separator_offset);
         }
-        context.stroke();
+        ctx.stroke();
     }
 
     for (let i = -5; i <= 5; i++) {
-        context.beginPath();
+        ctx.beginPath();
         let y = height / 2 + step * i;
-        context.moveTo(width / 2 + axis_separator_offset, y);
-        context.lineTo(width / 2 - axis_separator_offset, y);
+        ctx.moveTo(width / 2 + axis_separator_offset, y);
+        ctx.lineTo(width / 2 - axis_separator_offset, y);
         if (i !== 0) {
-            context.fillText((-i).toString(), width / 2 + axis_separator_offset, y + axis_separator_offset);
+            ctx.fillText((-i).toString(), width / 2 + axis_separator_offset, y + axis_separator_offset);
         }
-        context.stroke();
+        ctx.stroke();
     }
 }
 
 function clearCanvas() {
-    context.save();
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    context.restore();
+    ctx.save();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.restore();
     drawPoints();
 }
 
@@ -104,8 +103,6 @@ function drawPoints() {
 }
 
 function drawPoint(x, y) {
-    let canvas = document.getElementById('canvas');
-    let ctx = canvas.getContext('2d');
     let pointColor;
     pointColor = '#06266F';
     ctx.beginPath();
