@@ -13,8 +13,15 @@ public class ControllerServlet extends HttpServlet {
             if (req.getParameter("x") != null &&
                     req.getParameter("y") != null &&
                     req.getParameter("r") != null) {
+                double x = Double.parseDouble(req.getParameter("x"));
+                double y = Double.parseDouble(req.getParameter("y"));
+                double r = Double.parseDouble(req.getParameter("r"));
+                req.setAttribute("par_x", x);
+                req.setAttribute("par_y", y);
+                req.setAttribute("par_r", r);
                 getServletContext().getRequestDispatcher("/areaCheckServlet").forward(req, resp);
             } else if (req.getParameter("clear") != null && req.getParameter("clear").equals("true")) {
+                req.setAttribute("clear", true);
                 getServletContext().getRequestDispatcher("/clearServlet").forward(req, resp);
             } else getServletContext().getRequestDispatcher("/resultPage.jsp").forward(req, resp);
         } catch (NullPointerException | NumberFormatException e) {

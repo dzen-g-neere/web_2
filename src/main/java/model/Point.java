@@ -7,7 +7,6 @@ public class Point {
     private double y;
     private double r;
     private String result;
-    private String localTime;
     private BigDecimal processingTime;
 
     public Point(double x, double y, double r, String result, BigDecimal processingTime) {
@@ -56,15 +55,5 @@ public class Point {
 
     public void setProcessingTime(BigDecimal processingTime) {
         this.processingTime = processingTime;
-    }
-
-    public String toJson() {
-        return '{' +
-                "\"xValue\":" + "\"" + this.getX() + "\"" + "," +
-                "\"yValue\":" + "\"" + this.getY() + "\"" + "," +
-                "\"rValue\":" + "\"" + this.getR() + "\"" + "," +
-                "\"result\":" + "\"" + this.getResult() + "\"" + "," +
-                "\"totalProcessingTime\":" + "\"" + String.valueOf(this.processingTime.add(new BigDecimal("0.0000000001"))).substring(0, 8) + " sec" + "\"" +
-                "}";
     }
 }
