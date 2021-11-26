@@ -11,6 +11,7 @@ canvas.addEventListener('mousedown', event => clickOnCanvas(canvas, event));
 function loadCanvas(){
     pointsXArray = Array.from(document.getElementsByClassName("point_x")).map(v => v.innerHTML);
     pointsYArray = Array.from(document.getElementsByClassName("point_y")).map(v => v.innerHTML);
+    pointsRArray = Array.from(document.getElementsByClassName("point_r")).map(v => v.innerHTML);
     drawCanvas();
 }
 

@@ -14,12 +14,16 @@ public class ControllerServlet extends HttpServlet {
                     req.getParameter("y") != null &&
                     req.getParameter("r") != null) {
                 getServletContext().getRequestDispatcher("/areaCheckServlet").forward(req, resp);
-            } else if (req.getParameter("clear").equals("true")) {
+            } else if (req.getParameter("clear") != null && req.getParameter("clear").equals("true")) {
                 getServletContext().getRequestDispatcher("/clear").forward(req, resp);
-            } else getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
+            } else getServletContext().getRequestDispatcher("/resultPage.jsp").forward(req, resp);
         } catch (NullPointerException | NumberFormatException e) {
             System.out.println(e.getClass());
-            getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
+            getServletContext().getRequestDispatcher("/resultPage.jsp").forward(req, resp);
         }
+    }
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
     }
 }

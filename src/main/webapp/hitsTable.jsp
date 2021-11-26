@@ -2,7 +2,6 @@
 <%@ page import="model.Point" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <table  align="center" id="pointsTable" class="input_part">
-    <thead>
     <tr>
         <th>X</th>
         <th>Y</th>

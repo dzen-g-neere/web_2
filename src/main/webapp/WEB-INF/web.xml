@@ -27,4 +27,7 @@
         <servlet-name>ClearServlet</servlet-name>
         <url-pattern>/clear</url-pattern>
     </servlet-mapping>
+    <error-page>
+        <location>/resultPage.jsp</location>
+    </error-page>
 </web-app>

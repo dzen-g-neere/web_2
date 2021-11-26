@@ -155,8 +155,6 @@
                                         <input type="submit" value="Отправить" id="butSend">
                                     </td>
                                 </tr>
-                            </table>
-                            <table>
                                 <tr>
                                     <td class="input_part">
                                         <input type="button" id="clearButton" value="Очистить">

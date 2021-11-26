@@ -16,11 +16,19 @@
 <body>
 
 
-<table class="page_table" align="center">
-
+<table class="resultsPage" align="center">
     <tr>
         <td>
-            <p id="enter-text">RESULTS</p>
+            <p class="error">
+                Произошла ошибка, нажмите на кнопку, чтобы перейти на главную страницу.
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <form method="get" action="<%= request.getContextPath() %>/servlet">
+                <button id="button" type="submit">Нажмите, для перехода на рабочую страницу.</button>
+            </form>
         </td>
     </tr>
     <tr>
@@ -28,14 +36,6 @@
             <jsp:include page="hitsTable.jsp" />
         </td>
     </tr>
-    <tr>
-        <td>
-            <form method="get" action="<%= request.getContextPath() %>/servlet">
-                <button id="button" class="sliding-button" type="submit">Take me back.</button>
-            </form>
-        </td>
-    </tr>
 </table>
-
 </body>
 </html>

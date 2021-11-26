@@ -37,6 +37,9 @@ th{
     border-radius:30px;
     text-align: center;
 }
+#pointsTable {
+    border-spacing: 25px;
+}
 .interactive_part {
     font-family: "Comic Sans MS", "Comic Sans", cursive;
     font-size: 20pt;

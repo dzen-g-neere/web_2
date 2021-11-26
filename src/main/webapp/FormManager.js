@@ -41,11 +41,11 @@ function clickOnCanvas(canvas, event) {
 
 document.querySelector("#butSend").onclick = function (event) {
     event.preventDefault();
-    if (!isNumber(text_field.value) || Math.abs(text_field.value) > 5 ||
+    if (!isNumber(text_field.value) || Math.abs(text_field.value) >= 5 ||
         text_field.value === "" || !isChecked(radio_buttons)) {
-        errorX.hidden = !(!isNumber(text_field.value) || Math.abs(text_field.value) > 5 ||
+        errorX.hidden = !(!isNumber(text_field.value) || Math.abs(text_field.value) >= 5 ||
             text_field.value === "");
-            errorY.hidden = !isChecked(radio_buttons);
+            errorY.hidden = isChecked(radio_buttons);
     } else {
         errorX.hidden = true;
         errorY.hidden = true;
@@ -56,7 +56,6 @@ document.querySelector("#butSend").onclick = function (event) {
     }
 }
 document.querySelector("#clearButton").onclick = function (event) {
-    event.preventDefault();
     pointsXArray = [];
     pointsYArray = [];
     pointsRArray = [];
