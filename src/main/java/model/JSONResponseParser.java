@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JSONResponseParser {
-    public String parseJSON(ArrayList<Point> hits) {
+    public String parseJSON(List<Point> hits) {
         String res = "{" + "\"response\":[";
         for (Point h : hits) {
             res = res.concat(parseJSON(h) + ",");

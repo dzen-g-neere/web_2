@@ -47,7 +47,7 @@
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <input type="text" maxlength="8" name="x" id="paramX"
+                                                    <input type="text" maxlength="20" name="x" id="paramX"
                                                            pattern="-?([0-4])([.,][0-9]+)?"
                                                            step="0.01"
                                                            title="Y should be float number in range (-5, 5)">

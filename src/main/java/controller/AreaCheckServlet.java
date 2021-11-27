@@ -12,29 +12,34 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class AreaCheckServlet extends HttpServlet {
+    ReentrantLock reentrantLock = new ReentrantLock();
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         long startTime = System.nanoTime();
         resp.setContentType("text/html;charset=UTF-8");
         try (PrintWriter output = resp.getWriter()) {
             JSONResponseParser jsonResponseParser = new JSONResponseParser();
-            double x = Double.parseDouble("" + req.getAttribute("par_x"));
-            double y = Double.parseDouble("" +  req.getAttribute("par_y"));
-            double r = Double.parseDouble("" +  req.getAttribute("par_r"));
+            double x = (double) req.getAttribute("par_x");
+            double y = (double) req.getAttribute("par_y");
+            double r = (double) req.getAttribute("par_r");
+            reentrantLock.lock();
             ServletContext servletContext = this.getServletContext();
-            ArrayList<Point> points = null;
-            if (servletContext.getAttribute("points") != null) {
-                points = (ArrayList<Point>) servletContext.getAttribute("points");
+            List<Point> points;
+            if (servletContext.getAttribute("points") == null) {
+                servletContext.setAttribute("points", Collections.synchronizedList(new ArrayList<>()));
             }
-            if (points == null) points = new ArrayList<>();
+            points = (List<Point>) servletContext.getAttribute("points");
             if (isValid(x, y, r)) {
                 Point point = initPoint(x, y, r, startTime);
                 points.add(point);
             }
+            reentrantLock.unlock();
             output.println(jsonResponseParser.parseJSON(points));
-            servletContext.setAttribute("points", points);
         } catch (Exception e) {
             e.printStackTrace();
             try {
