@@ -190,6 +190,13 @@
             </label>
         </td>
     </tr>
+    <tr>
+        <td>
+            <label class="error" id="errorV" hidden>
+                Произошла ошибка. Перезапустите страницу.
+            </label>
+        </td>
+    </tr>
 </table>
 <jsp:include page="hitsTable.jsp"/>
 </body>

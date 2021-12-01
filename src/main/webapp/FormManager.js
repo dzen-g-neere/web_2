@@ -3,6 +3,7 @@ var valueR = document.getElementById("valueR");
 var errorX = document.getElementById("errorX");
 var errorY = document.getElementById("errorY");
 var errorC = document.getElementById("errorC");
+var errorV = document.getElementById("errorV");
 
 var pointsXArray = [];
 var pointsYArray = [];
@@ -43,7 +44,7 @@ document.querySelector("#butSend").onclick = function (event) {
         text_field.value === "" || !isChecked(radio_buttons)) {
         errorX.hidden = !(!isNumber(text_field.value) || Math.abs(text_field.value) >= 5 ||
             text_field.value === "");
-            errorY.hidden = isChecked(radio_buttons);
+        errorY.hidden = isChecked(radio_buttons);
     } else {
         errorX.hidden = true;
         errorY.hidden = true;
@@ -78,35 +79,36 @@ function sendRequest(xValue, yValue, rValue) {
         'y': yValue,
         'r': rValue,
     }).done(function (data) {
+            console.log(data);
+            let par = data;
+            if (par == null || par === "") {
+                errorV.hidden = false;
+                return;
+            } else {
+                errorV.hidden = true;
+            }
             let table = document.getElementById("pointsTable");
             while (table.rows.length > 1) {
                 table.deleteRow(1);
             }
-            console.log(data);
-            let par = data;
-            if (par === "Incorrect coordinates type" || par == null || par === "") {
-                return;
-            }
-            if (par !== "remove") {
-                let result = JSON.parse(par);
-                pointsXArray = [];
-                pointsYArray = [];
-                pointsRArray = [];
-                for (let i in result.response) {
-                    pointsXArray.push(result.response[i].xValue);
-                    pointsYArray.push(result.response[i].yValue);
-                    pointsRArray.push(result.response[i].rValue);
-                    let newRow = '<tr>';
-                    newRow += '<td>' + result.response[i].xValue + '</td>';
-                    newRow += '<td>' + result.response[i].yValue + '</td>';
-                    newRow += '<td>' + result.response[i].rValue + '</td>';
-                    newRow += '<td>' + result.response[i].result + '</td>';
-                    newRow += '<td>' + result.response[i].totalProcessingTime + '</td>';
-                    newRow += '</tr>';
-                    $('#pointsTable').append(newRow);
-                    clearCanvas();
-                    drawCanvas();
-                }
+            let result = JSON.parse(par);
+            pointsXArray = [];
+            pointsYArray = [];
+            pointsRArray = [];
+            for (let i in result.response) {
+                pointsXArray.push(result.response[i].xValue);
+                pointsYArray.push(result.response[i].yValue);
+                pointsRArray.push(result.response[i].rValue);
+                let newRow = '<tr>';
+                newRow += '<td>' + result.response[i].xValue + '</td>';
+                newRow += '<td>' + result.response[i].yValue + '</td>';
+                newRow += '<td>' + result.response[i].rValue + '</td>';
+                newRow += '<td>' + result.response[i].result + '</td>';
+                newRow += '<td>' + result.response[i].totalProcessingTime + '</td>';
+                newRow += '</tr>';
+                $('#pointsTable').append(newRow);
+                clearCanvas();
+                drawCanvas();
             }
         }
     ).fail(function (e) {
@@ -141,7 +143,8 @@ function refreshButtonSelection() {
         }
     }
 }
-function radiusButtonRefresh(){
+
+function radiusButtonRefresh() {
     refreshButtonSelection();
     clearCanvas();
     drawCanvas();

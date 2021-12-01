@@ -33,15 +33,17 @@ public class ControllerServlet extends HttpServlet {
                 } else {
                     r = Double.parseDouble(rString);
                 }
-                req.setAttribute("par_x", x);
-                req.setAttribute("par_y", y);
-                req.setAttribute("par_r", r);
-                getServletContext().getRequestDispatcher("/areaCheckServlet").forward(req, resp);
+                if (isValid(x, y, r)) {
+                    req.setAttribute("par_x", x);
+                    req.setAttribute("par_y", y);
+                    req.setAttribute("par_r", r);
+                    getServletContext().getRequestDispatcher("/areaCheckServlet").forward(req, resp);
+                } else getServletContext().getRequestDispatcher("/resultPage.jsp").forward(req, resp);
             } else if (req.getParameter("clear") != null && req.getParameter("clear").equals("true")) {
                 req.setAttribute("clear", true);
                 getServletContext().getRequestDispatcher("/clearServlet").forward(req, resp);
             } else getServletContext().getRequestDispatcher("/resultPage.jsp").forward(req, resp);
-        } catch (NullPointerException | NumberFormatException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             getServletContext().getRequestDispatcher("/resultPage.jsp").forward(req, resp);
         }
@@ -50,5 +52,9 @@ public class ControllerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
+    }
+
+    private boolean isValid(double x, double y, double r) {
+        return (x > -5 && x < 5) && (y >= -3 && y <= 5) && (r >= 1 && r <= 3);
     }
 }

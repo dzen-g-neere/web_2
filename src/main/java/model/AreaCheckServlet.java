@@ -1,7 +1,4 @@
-package controller;
-
-import model.JSONResponseParser;
-import model.Point;
+package model;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -18,12 +15,13 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class AreaCheckServlet extends HttpServlet {
     ReentrantLock reentrantLock = new ReentrantLock();
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         long startTime = System.nanoTime();
         resp.setContentType("text/html;charset=UTF-8");
         try (PrintWriter output = resp.getWriter()) {
-            JSONResponseParser jsonResponseParser = new JSONResponseParser();
+
             double x = (double) req.getAttribute("par_x");
             double y = (double) req.getAttribute("par_y");
             double r = (double) req.getAttribute("par_r");
@@ -34,12 +32,11 @@ public class AreaCheckServlet extends HttpServlet {
                 servletContext.setAttribute("points", Collections.synchronizedList(new ArrayList<>()));
             }
             points = (List<Point>) servletContext.getAttribute("points");
-            if (isValid(x, y, r)) {
-                Point point = initPoint(x, y, r, startTime);
-                points.add(point);
-            }
-            reentrantLock.unlock();
+            JSONResponseParser jsonResponseParser = new JSONResponseParser();
+            Point point = initPoint(x, y, r, startTime);
+            points.add(point);
             output.println(jsonResponseParser.parseJSON(points));
+            reentrantLock.unlock();
         } catch (Exception e) {
             e.printStackTrace();
             try {
@@ -55,14 +52,13 @@ public class AreaCheckServlet extends HttpServlet {
     }
 
     private Point initPoint(double x, double y, double r, long startTime) {
-        BigDecimal computationTime = BigDecimal.valueOf(Double.parseDouble(String.valueOf(BigDecimal.valueOf((System.nanoTime() - startTime) / 1000000000d)).substring(0, 8)));
+        BigDecimal computationTime = BigDecimal.valueOf((System.nanoTime() - startTime) / 1000000000d);
+        String temp = String.valueOf(computationTime);
+        if (temp.length() > 8)
+            computationTime = BigDecimal.valueOf(Double.parseDouble(String.valueOf(computationTime).substring(0, 8)));
         return new Point(x, y, r,
                 isHit(x, y, r) ? "Да" : "Нет",
                 computationTime);
-    }
-
-    private boolean isValid(double x, double y, double r) {
-        return (x >= -5 && x <= 5) && (y >= -3 && y <= 5) && (r >= 1 && r <= 3);
     }
 
     private boolean isHit(double x, double y, double r) {
