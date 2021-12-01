@@ -21,34 +21,40 @@ public class AreaCheckServlet extends HttpServlet {
         long startTime = System.nanoTime();
         resp.setContentType("text/html;charset=UTF-8");
         try (PrintWriter output = resp.getWriter()) {
-
-            double x = (double) req.getAttribute("par_x");
-            double y = (double) req.getAttribute("par_y");
-            double r = (double) req.getAttribute("par_r");
-            reentrantLock.lock();
-            ServletContext servletContext = this.getServletContext();
-            List<Point> points;
-            if (servletContext.getAttribute("points") == null) {
-                servletContext.setAttribute("points", Collections.synchronizedList(new ArrayList<>()));
+            if (req.getAttribute("par_x") != null &&
+                    req.getAttribute("par_y") != null &&
+                    req.getAttribute("par_r") != null){
+                double x = (double) req.getAttribute("par_x");
+                double y = (double) req.getAttribute("par_y");
+                double r = (double) req.getAttribute("par_r");
+                reentrantLock.lock();
+                ServletContext servletContext = this.getServletContext();
+                List<Point> points;
+                if (servletContext.getAttribute("points") == null) {
+                    servletContext.setAttribute("points", Collections.synchronizedList(new ArrayList<>()));
+                }
+                points = (List<Point>) servletContext.getAttribute("points");
+                JSONResponseParser jsonResponseParser = new JSONResponseParser();
+                Point point = initPoint(x, y, r, startTime);
+                points.add(point);
+                output.println(jsonResponseParser.parseJSON(points));
+                reentrantLock.unlock();
+            } else {
+                getServletContext().getRequestDispatcher("/resultPage.jsp").forward(req, resp);
             }
-            points = (List<Point>) servletContext.getAttribute("points");
-            JSONResponseParser jsonResponseParser = new JSONResponseParser();
-            Point point = initPoint(x, y, r, startTime);
-            points.add(point);
-            output.println(jsonResponseParser.parseJSON(points));
-            reentrantLock.unlock();
         } catch (Exception e) {
             e.printStackTrace();
             try {
-                getServletContext().getRequestDispatcher("/controllerServlet").forward(req, resp);
-            } catch (Exception ignored) {
+                getServletContext().getRequestDispatcher("/resultPage.jsp").forward(req, resp);
+            } catch (ServletException servletException) {
+                servletException.printStackTrace();
             }
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/controllerServlet").forward(req, resp);
+        getServletContext().getRequestDispatcher("/resultPage.jsp").forward(req, resp);
     }
 
     private Point initPoint(double x, double y, double r, long startTime) {

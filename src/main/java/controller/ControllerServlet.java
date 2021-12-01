@@ -45,7 +45,11 @@ public class ControllerServlet extends HttpServlet {
             } else getServletContext().getRequestDispatcher("/resultPage.jsp").forward(req, resp);
         } catch (Exception e) {
             e.printStackTrace();
-            getServletContext().getRequestDispatcher("/resultPage.jsp").forward(req, resp);
+            try {
+                getServletContext().getRequestDispatcher("/resultPage.jsp").forward(req, resp);
+            } catch (ServletException servletException) {
+                servletException.printStackTrace();
+            }
         }
     }
 

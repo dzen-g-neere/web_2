@@ -14,18 +14,19 @@ public class ClearServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            if(Boolean.parseBoolean("" + req.getAttribute("clear"))) {
+            if(req.getAttribute("clear") != null &&
+                    Boolean.parseBoolean("" + req.getAttribute("clear"))) {
                 ServletContext servletContext = req.getServletContext();
                 ArrayList<Point> points = new ArrayList<>();
                 servletContext.setAttribute("points", points);
-            }
+            } else getServletContext().getRequestDispatcher("/resultPage.jsp").forward(req, resp);
         } catch (Exception e) {
             System.out.println(e.getClass());
-            getServletContext().getRequestDispatcher("/controllerServlet").forward(req, resp);
+            getServletContext().getRequestDispatcher("/resultPage.jsp").forward(req, resp);
         }
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/controllerServlet").forward(req, resp);
+        getServletContext().getRequestDispatcher("/resultPage.jsp").forward(req, resp);
     }
 }
