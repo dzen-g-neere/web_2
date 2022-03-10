@@ -1,6 +1,6 @@
 # web_2
-(HTML + CSS + JS + JSP + Servlets)
+(HTML + CSS + JS + JSP + Servlets + Java)
 Web application with using Java Servlet Pages.
 Purpose of application:
 User enters coordinates of point. Server validates data and checks if point located in specific area.
-https://docs.google.com/document/d/16hlL7H9JQQq3fT34bNynzq3dM_9WAX3dDQ0ErlqQhyc/edit?usp=sharing
+[Веб_2_Залевский_P3212.pdf](https://github.com/zengineere/web_2/files/8226081/_2_._P3212.pdf)
